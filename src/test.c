@@ -17,16 +17,29 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+
+void * continuous_autolevel( void * ptr ) {
+	
+	while ( 1 ) {
+		kinectaux_autolevel();
+		usleep( 10 );
+	}
+	return NULL;
+
+}
+
+
 int main( int argc, char ** argv ) {
 	if( !kinectaux_init( 0 ) ) {
 		return EXIT_FAILURE;
 	}
 
-	while ( 1 ) {
-		kinectaux_autolevel();
-		usleep( 10 );
-	}
+	pthread_t t;
+	pthread_create( &t, NULL, continuous_autolevel, NULL );
 
+	getc( stdin );
+
+	/*
 	int i;
 	for ( i = 0; i < 10000; i++ ) {
 		kinectaux_data d = kinectaux_get_data();
@@ -38,6 +51,7 @@ int main( int argc, char ** argv ) {
 		printf( "Your kinect is rotated %f degrees sideways.\n", kinectaux_lateral_tilt() );
 		usleep( 10000 );
 	}
+	*/
 
 	kinectaux_exit();
 	return EXIT_SUCCESS;

@@ -9,7 +9,7 @@ lib: $(SRCDIR)kinect_aux.c $(SRCDIR)kinect_aux.h
 		$(OBJDIR)kinect_aux.o
 
 test: $(SRCDIR)test.c lib
-	gcc $(SRCDIR)test.c $(USBLIB) $(KINECTLIB) $(MATHLIB) -o test
+	gcc $(SRCDIR)test.c $(USBLIB) $(KINECTLIB) $(MATHLIB) -pthread -o test
 
 doc: Doxyfile $(SRCDIR)kinect_aux.h
 	doxygen Doxyfile

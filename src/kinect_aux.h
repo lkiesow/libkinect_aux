@@ -19,6 +19,11 @@
 
 #include <stdint.h>
 
+#ifdef __cplusplus
+/* only need to export C interface i used by C++ source code */
+extern "C" {
+#endif
+
 /**
  * @brief Struct to store the current state of the Kinect.
  **/
@@ -116,5 +121,9 @@ int kinectaux_autolevel();
  * @return  Tilt angle of the Kinect.
  **/
 double kinectaux_lateral_tilt();
+
+#ifdef __cplusplus
+} /* extern "C" */
+#endif
 
 #endif /* KINECT_AUX_H_INCLUDED */

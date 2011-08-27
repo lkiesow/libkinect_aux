@@ -1,5 +1,5 @@
 INSTDIRL =/usr/lib64/
-INSTDIRI =/use/include/
+INSTDIRI =/usr/include/
 LIBUSBINC=${shell pkg-config --cflags libusb-1.0}
 USBLIB=${shell pkg-config --libs libusb-1.0}
 MATHLIB  =-lm

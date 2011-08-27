@@ -7,3 +7,6 @@ KINECTLIB=-L . -lkinect_aux
 
 COMPILER = gcc
 FLAGS    = -Wall
+
+SRCDIR  =src/
+OBJDIR  =obj/

@@ -5,10 +5,9 @@
  *    Description:  Control Kinect motors and read acceleration data.
  *                  Parts taken from ROS and libfreenect
  *
- *        Version:  1.0
+ *        Version:  10827
  *        Created:  06/23/2011 03:22:43 PM
- *       Modified:  08/24/2011 12:30:00 PM
- *       Revision:  none
+ *       Modified:  8/27/11 18:57:37
  *       Compiler:  gcc
  *
  *         Author:  Lars Kiesow (lkiesow), lkiesow@uos.de
@@ -38,10 +37,13 @@
 libusb_device_handle * kinectaux_dev = 0;
 
 
-/**
- * openAuxDevice
- * @param index
- */
+/*******************************************************************************
+ * Establishes connection to Kinect with given id. Automatically search for the
+ * correct device.
+ *
+ * @param index  Index of Kinect to use. Zero is the first Kinect connected,
+ *               one the second, ...
+ ******************************************************************************/
 void kinectaux_open_device( int index ) {
 
 	/* pointer to pointer of device, used to retrieve a list of devices */
@@ -84,13 +86,16 @@ void kinectaux_open_device( int index ) {
 	libusb_free_device_list( devs, 1 );
 }
 
-/**
- * readState
- * @return kinect_aux_data
- */
+
+/*******************************************************************************
+ * Read data from the Kinect.
+ *
+ * @return  A kinectaux_data struct containing the current state of the Kinect.
+ ******************************************************************************/
 kinectaux_data kinectaux_get_data() {
 	uint8_t buf[10];
-	const int ret = libusb_control_transfer( kinectaux_dev, 0xC0, 0x32, 0x0, 0x0, buf, 10, 0 );
+	const int ret = libusb_control_transfer( 
+			kinectaux_dev, 0xC0, 0x32, 0x0, 0x0, buf, 10, 0 );
 	if ( ret != 10 ) {
 		fprintf( stderr, "Error: Error in accelerometer reading, "
 				"libusb_control_transfer returned %d\n\n", ret );
@@ -113,11 +118,17 @@ kinectaux_data kinectaux_get_data() {
 	return dat;
 }
 
+
 /**
- * setTiltAngle
- * @param angle
+ * Set the tilt angle of the Kinect. This action is nonblocking. 
+ *
+ * @param angle  The angle the Kinect should tilt to.
+ * @return  Successful or not.
  */
 int kinectaux_set_tilt( double angle ) {
+	if ( !kinectaux_dev ) {
+		return 0;
+	}
 	uint8_t empty[0x1];
 
 	angle = (angle < MIN_TILT_ANGLE) 
@@ -137,9 +148,11 @@ int kinectaux_set_tilt( double angle ) {
 }
 
 /**
- * setTiltAngle
- * @param angle
- */
+ * Set the leds of the Kinect.
+ *
+ * @param option  Unsigned 16-bit integer as flag for the leds.
+ * @return  Successful or not.
+ **/
 int kinectaux_set_led( const uint16_t option ) {
 	uint8_t empty[0x1];
 
@@ -156,9 +169,12 @@ int kinectaux_set_led( const uint16_t option ) {
 
 
 /**
- * initialize
- * @return 1 if successfully initialized, 0 else
- */
+ * Initialized libusb, get device descriptor and prepare library. This function
+ * must be called before using any other functions of the library.
+ *
+ * @param idx  Index of the Kinect to use.
+ * @return  Successful or not.
+ **/
 int kinectaux_init( int idx ) {
 
 	if ( kinectaux_dev ) {
@@ -183,19 +199,23 @@ int kinectaux_init( int idx ) {
 	return 1;
 }
 
+
 /**
- * clean
- *   - exit libusb
- */
+ * Closes the connection to the Kinect.
+ **/
 void kinectaux_exit() {
 	libusb_exit(0);
+	kinectaux_dev = NULL;
 }
 
 
 /**
- * automatically levels the kinect
- * @return 1 if successfully leveled, 0 else
- */
+ * Automatically levels the Kinect. This function is blocking. After calling
+ * this function you can be sure that the Kinect is level unless the function
+ * exited with a failure state.
+ *
+ * @return  If successful or not.
+ **/
 int kinectaux_autolevel() {
 	if ( !kinectaux_dev ) {
 		return 0;
@@ -204,7 +224,7 @@ int kinectaux_autolevel() {
 	kinectaux_set_tilt( 0.0 );
 	/* wait to ensure that the rotation has started */
 	do {
-		usleep( 10 );
+		usleep( 100 );
 		/* wait until the operation is finished */
 	} while ( kinectaux_get_data().raw.tilt.status );
 	return 1;
@@ -212,13 +232,10 @@ int kinectaux_autolevel() {
 
 
 /**
- * checks whether the kinect is currently tilted to the left or the right side
- * @return - TURNING if device is currently turning and no valid data came back
- *         - FAILURE when not initialized
- *         - -1 when tilted to the left side
- *         - 1 when tilted to the right side
- *         - 0 when not tilted
- */
+ * Returns the angle (degrees) the Kinect is tilted sideways.
+ *
+ * @return  Tilt angle of the Kinect.
+ **/
 double kinectaux_lateral_tilt() {
 
 	if ( !kinectaux_dev ) {

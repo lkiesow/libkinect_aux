@@ -63,9 +63,6 @@ int main( int argc, char ** argv ) {
   pthread_t t;
   pthread_create( &t, NULL, continuous_autolevel, NULL );
   
-  printf("Auto leveling\nPress <Enter> to continue...\n");
-  getc( stdin );
-  
   int ch = 0;
 
   /*
@@ -90,6 +87,7 @@ int main( int argc, char ** argv ) {
       ch=getchar();
     }
   }
+  printf("\n");
   
   kinectaux_exit();
   return EXIT_SUCCESS;

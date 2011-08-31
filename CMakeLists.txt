@@ -52,3 +52,9 @@ TARGET_LINK_LIBRARIES(kinect_aux ${LIBUSB-1.0} ${CMAKE_THREAD_LIBS_INIT} "m" )
 ###########################################
 ADD_EXECUTABLE(test src/test)
 TARGET_LINK_LIBRARIES(test kinect_aux)
+
+
+###########################################
+# install
+###########################################
+# TODO

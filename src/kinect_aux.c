@@ -1,13 +1,13 @@
 /*******************************************************************************
  *
- *       Filename:  kinect_aux.h
+ *       Filename:  kinect_aux.c
  *
  *    Description:  Control Kinect motors and read acceleration data.
- *                  Parts taken from ROS and libfreenect
+ *                  Parts taken from ROS
  *
  *        Version:  10827
  *        Created:  06/23/2011 03:22:43 PM
- *       Modified:  8/27/11 18:57:37
+ *       Modified:  8/31/11 17:41:54
  *       Compiler:  gcc
  *
  *         Author:  Lars Kiesow (lkiesow), lkiesow@uos.de

@@ -4,13 +4,12 @@
  *             and motor.
  * @details    Library which provides easy acces to the Kinect accelerator,
  *             leds and motor. Furthermore it contains routines for automatic
- *             leveling of the kinect. Parts of this code were taken from ROS
- *             and libfreenect.
+ *             leveling of the kinect. Parts of this code were taken from ROS.
  * @author     Lars Kiesow (lkiesow), lkiesow@uos.de
  * @author     Denis Meyer (denmeyer), denmeyer@uos.de
- * @version    110827
+ * @version    110831
  * @date       Created:       2011-08-20 17:28:28
- * @date       Last modified: 8/27/11 20:05:48
+ * @date       Last modified: 8/31/11 17:41:43
  *
  */
 

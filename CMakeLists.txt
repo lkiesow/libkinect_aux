@@ -57,4 +57,36 @@ TARGET_LINK_LIBRARIES(test kinect_aux)
 ###########################################
 # install
 ###########################################
-# TODO
+install( 
+	FILES ${CMAKE_CURRENT_BINARY_DIR}/libkinect_aux.so
+	DESTINATION lib64 )
+install( 
+	FILES ${CMAKE_CURRENT_SOURCE_DIR}/src/kinect_aux.h
+	DESTINATION include )
+#install( 
+#	FILES ${rgbPcGrabber_SOURCE_DIR}/rgbPcGrabber.1 
+#	DESTINATION share/man/man1 )
+
+
+###########################################
+# uninstall
+###########################################
+add_custom_target( uninstall 
+	COMMENT "Removing installed files"
+	COMMAND "echo" "@CMAKE_INSTALL_PREFIX@/lib64/libkinect_aux.so"
+	COMMAND "rm" "@CMAKE_INSTALL_PREFIX@/lib64/libkinect_aux.so"
+	COMMAND "echo" "@CMAKE_INSTALL_PREFIX@/include/kinect_aux.h"
+	COMMAND "rm" "@CMAKE_INSTALL_PREFIX@/include/kinect_aux.h" )
+
+
+###########################################
+# Generate documentation
+###########################################
+find_package(Doxygen)
+if(DOXYGEN_FOUND)
+	add_custom_target( doc
+		${DOXYGEN_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/Doxyfile
+		WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+		COMMENT "Generating API documentation with Doxygen" VERBATIM
+	)
+endif(DOXYGEN_FOUND)

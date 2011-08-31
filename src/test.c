@@ -19,6 +19,7 @@
 #include <termios.h>
 #include <unistd.h>
 #include <fcntl.h>
+#include <pthread.h>
 
 void * continuous_autolevel( void * ptr ) {
   while ( 1 ) {

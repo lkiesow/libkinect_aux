@@ -1,0 +1,28 @@
+libkinect_aux
+=============
+
+About
+-----
+Kinect Auxiliary Library
+Provides easy access to kinect acceleration sensor, motor and LED
+
+Requirements
+------------------
+	- CMake  ( http://cmake.org/ )
+	- libusb ( http://www.libusb.org/ )
+	- kinect sensor
+
+Compilation
+-----------
+	- mkdir build
+	- cd build
+	- cmake ../
+	- make
+	generated files:
+	    - kinect_aux library
+	  	- libkinect_aux.so    (Linux)
+	  	- libkinect_aux.dylib (Mac OS X)
+	    - test program
+	      	- test                (Executable)
+
+(to be changed in future commits)

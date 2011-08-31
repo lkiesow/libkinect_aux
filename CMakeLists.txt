@@ -42,7 +42,8 @@ endif(LIBUSB-1.0)
 ###########################################
 # kinect_aux library
 ###########################################
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -L ${LIBUSB-1.0} -lusb-1.0 -lm ")
+FIND_PACKAGE(Threads)
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -lm ")
 ADD_LIBRARY(kinect_aux SHARED src/kinect_aux.c)
 TARGET_LINK_LIBRARIES(kinect_aux ${LIBUSB-1.0})
 

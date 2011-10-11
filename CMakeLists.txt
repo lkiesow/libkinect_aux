@@ -59,7 +59,7 @@ TARGET_LINK_LIBRARIES(test kinect_aux)
 ###########################################
 install( 
 	FILES ${CMAKE_CURRENT_BINARY_DIR}/libkinect_aux.so
-	DESTINATION lib64 )
+	DESTINATION lib )
 install( 
 	FILES ${CMAKE_CURRENT_SOURCE_DIR}/src/kinect_aux.h
 	DESTINATION include )
